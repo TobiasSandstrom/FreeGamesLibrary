@@ -1,0 +1,22 @@
+﻿@page "/counter"
+@using FreeGamesLibrary.Store.CounterState
+@using FreeGamesLibrary.Store
+@rendermode InteractiveServer
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@inject IState<CounterState> counterState
+@inject IDispatcher dispatcher
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @counterState.Value.Counter</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Increment Counter</button>
+
+@code {
+
+    private void IncrementCount()
+    {
+        dispatcher.Dispatch(new IncrementCounterAction(counterState.Value.Counter));
+    }
+}

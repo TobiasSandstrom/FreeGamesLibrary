@@ -7,13 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Settings\PageSettings.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Fluxor" Version="6.2.1.5" />
     <PackageReference Include="Fluxor.Blazor.Web" Version="6.2.1.5" />
     <PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="6.2.1.5" />
+    <PackageReference Include="MudBlazor" Version="7.15.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Store\CounterState\Effects\" />
+    <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
 </Project>

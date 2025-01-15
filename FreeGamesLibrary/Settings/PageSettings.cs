@@ -10,6 +10,7 @@ namespace Settings
             {
                 Primary = "rgb(220, 215, 201)",
                 Secondary = "rgb(162, 123, 92)",
+                Tertiary = "rgb(44, 54, 56)",
                 TextPrimary = "rgb(220, 215, 201)",
                 TextSecondary = "rgb(162, 123, 92)",
                 AppbarBackground = "rgba(0, 0, 0, 0)",
@@ -22,6 +23,7 @@ namespace Settings
             {
                 Primary = "rgb(220, 215, 201)",
                 Secondary = "rgb(162, 123, 92)",
+                Tertiary = "rgb(44, 54, 56)",
                 TextPrimary = "rgb(220, 215, 201)",
                 TextSecondary = "rgb(162, 123, 92)",
                 AppbarBackground = "rgba(0, 0, 0, 0)",

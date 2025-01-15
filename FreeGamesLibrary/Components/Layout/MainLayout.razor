@@ -8,20 +8,20 @@
 
 <div class="page">
     <main>
-        <article class="content px-4">
+        <div style="position:relative;" class="content">
             <MudLayout>
-                <MudAppBar ELevation="0" Color="Color.Transparent">
+                <MudAppBar Style="position:absolute; top:0;" ELevation="0" Color="Color.Transparent">
                     <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="DrawerToggle" />
                 </MudAppBar>
                 <MudDrawer @bind-Open="_drawerOpen" Elevation="7">
                     <NavMenu />
                 </MudDrawer>
-                <MudMainContent>
+                <MudMainContent Style="padding-top:0;">
                     @Body
                 </MudMainContent>
             </MudLayout>
 
-        </article>
+        </div>
     </main>
 </div>
 

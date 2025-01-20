@@ -17,7 +17,7 @@ namespace Settings
                 DrawerBackground = "rgb(44, 54, 57)",
                 DrawerText = "rgb(0, 0, 0)",
                 Background = "rgb(60, 91, 93)",
-                
+
             },
             PaletteDark = new PaletteDark()
             {

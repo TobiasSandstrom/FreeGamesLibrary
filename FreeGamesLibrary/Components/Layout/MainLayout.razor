@@ -1,5 +1,8 @@
-﻿@using Settings
+﻿@using FreeGamesLibrary.Store.UiUseState
+@using Settings
 @inherits LayoutComponentBase
+@inject IState<UiState> UiState
+@inject IDispatcher dispatcher
 
 <MudThemeProvider Theme="settings.Palette" />
 <MudPopoverProvider />

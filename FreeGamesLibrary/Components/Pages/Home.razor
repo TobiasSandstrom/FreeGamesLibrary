@@ -1,27 +1,25 @@
 ﻿@page "/"
-@inherits MainLayout
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@inject IDispatcher dispatcher
+@inject IState<UiState> UiState
+@inject NavigationManager NavigationManager
 @using FreeGamesLibrary.Components.Layout
+@using FreeGamesLibrary.Store.UiUseState
 
 <PageTitle>Home</PageTitle>
 
-<div style="width: 100%; border: 1px solid black;
-            padding:150px 20px;
-            margin:0px;
-            background-image: url('Images/space-banner2.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            overflow: hidden;">
-    <MudContainer Style="display:flex; justify-content: space-between; align-items:center;">
-        <MudContainer Style="width:50%">
-            @* <MudImage Style="width:80%;" Src="images/rb_6588.png"></MudImage> *@
-        </MudContainer>
-        <MudContainer Style="width:50%; background-color: rgba(0, 0, 0, 0.50); padding:20px 20px;">
+<div class="home-banner">
+    <MudContainer Class="home-banner-inner-container">
+
+        <MudContainer Class="home-banner-text-container">
             <MudText Color="Color.Secondary" Typo="Typo.h2"><b>Free Games Library</b></MudText>
-            <MudText class="mt-4" Color="Color.Secondary" Typo="Typo.body2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</MudText>
-            <MudButton class="mt-4 px-4 py-2" Variant="Variant.Filled" Color="Color.Secondary">
-                <MudText Color="Color.Primary" Typo="Typo.body2">Browse Library</MudText>
-            </MudButton>
+            <MudText class="mt-4" Color="Color.Secondary" Typo="Typo.body1">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</MudText>
+            <MudContainer Class="d-flex justify-end">
+                <MudButton class="mt-4 px-4 py-2" Variant="Variant.Filled" Color="Color.Secondary">
+                    <MudText Color="Color.Primary"Typo="Typo.body1">Browse Library</MudText>
+                </MudButton>
+            </MudContainer>
         </MudContainer>
 
     </MudContainer>
@@ -29,29 +27,86 @@
 
 </div>
 
-<div style="display:flex; justify-content:center; background-color:rgb(225, 225, 210);">
-    @* <div style="max-width:1280px; text-align:center; padding: 20px 0; display:flex; align-items:start; justify-content:space-around; background-color:rgb(225, 225, 210);"> *@
-    <MudContainer style="text-align:center; padding: 10px 0; display:flex; align-items:start; justify-content:space-around;">
-        <div style="margin: 0 10px; width:25%; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+<MudContainer Class="mb-12 mt-12">
+
+    <MudText Align="Align.Center" Class="mb-6 mt-6" Typo="Typo.h3">Featured Games</MudText>
+    <MudContainer>
+        <MudGrid Spacing="4" Class="d-flex flex-row">
+
+            @foreach (var game in UiState.Value.GamesSimple.Take(3))
+            {
+
+                <MudItem xs="12" lg="4">
+                    <MudPaper Elevation="5" @onclick="() => NavigateTo(game.Game_Url)" Class="pa-4" style="height:100%; background-color: var(--mud-palette-tertiary); cursor:pointer;">
+                        <MudImage Style="width:100%" Src="@game.Thumbnail"></MudImage>
+                        <div class="d-flex justify-space-between" >
+                            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="mb-2">@game.Title</MudText>
+                                @foreach (var platform in game.Platform)
+                                {
+                                    <div>
+                                        <MudIcon Color="Color.Primary" Class="ml-2" Icon="@(platform == "PC (Windows)" ? Icons.Custom.Brands.MicrosoftWindows : @Icons.Custom.Brands.Chrome)"></MudIcon>
+                                    </div>
+                                }
+                            
+                        </div>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">@game.Short_Description</MudText>
+                    </MudPaper>
+
+                </MudItem>
+
+            }
+
+        </MudGrid>
+    </MudContainer>
+</MudContainer>
+
+<div class="py-4 my-20 showcase-banner">
+    <MudContainer Class="showcase-container">
+        <MudContainer class="showcase-card">
             <MudIcon Style="margin:0; font-size:50px;" Color="Color.Tertiary" Icon="@Icons.Material.Filled.MoneyOff"></MudIcon>
             <MudText Typo="Typo.h6" Color="Color.Tertiary">100% free to play</MudText>
             <MudText Typo="Typo.body2" Color="Color.Tertiary">The library consists exclusively of 100% free games to play.</MudText>
-        </div>    
-        <div style="margin: 0 10px; width:25%; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+        </MudContainer>    
+        <MudContainer class="showcase-card">
             <MudIcon Style="margin:0; font-size:50px;" Color="Color.Tertiary" Icon="@Icons.Custom.Uncategorized.ChessQueen"></MudIcon>
             <MudText Typo="Typo.h6" Color="Color.Tertiary">Easy to use</MudText>
             <MudText Typo="Typo.body2" Color="Color.Tertiary">Simple and user-friendly—browse through categories or try your luck with a randomly selected free game!</MudText>
 
-        </div>
-        <div style="margin: 0 10px; width:25%; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+        </MudContainer>
+        <MudContainer class="showcase-card">
             <MudIcon Style="margin:0; font-size:50px;" Color="Color.Tertiary" Icon="@Icons.Material.Filled.VideogameAsset"></MudIcon>
-            <MudText Typo="Typo.h6" Color="Color.Tertiary">@gamecount</MudText>
+            <MudText Typo="Typo.h6" Color="Color.Tertiary">@UiState.Value.GamesSimple.Count</MudText>
             <MudText Typo="Typo.body2" Color="Color.Tertiary">Current games in the library!</MudText>
+            <MudText Typo="Typo.body2" Color="Color.Tertiary">
+                <b>@UiState.Value.GamesSimple.Count(x => x.Platform.Any(p => p.Equals("PC (Windows)", StringComparison.OrdinalIgnoreCase)))</b> - PC Games
+            </MudText>
+            <MudText Typo="Typo.body2" Color="Color.Tertiary">
+                <b>@UiState.Value.GamesSimple.Count(x => x.Platform.Any(p => p.Equals("Web Browser", StringComparison.OrdinalIgnoreCase)))</b> - Web Browser Games
+            </MudText>
 
-        </div>
+        </MudContainer>       
     </MudContainer>
 </div>
 
+
+
+<div style="height:25vh;">
+
+
+</div>
+
 @code{
-    int gamecount = 456;
+    protected async override Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        if (UiState.Value.GamesSimple.Count <= 0)
+        {
+            dispatcher.Dispatch(new GetGamesSimpleListAction());
+        }
+    }
+
+    private void NavigateTo(string url)
+    {
+        NavigationManager.NavigateTo(url);
+    }
 }

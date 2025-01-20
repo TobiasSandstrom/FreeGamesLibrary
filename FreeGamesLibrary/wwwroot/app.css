@@ -16,3 +16,50 @@
     margin:0;
 
 }
+
+.home-banner {
+    width: 100%;
+    border: 1px solid black;
+    padding: 150px 20px;
+    margin: 0px;
+    background-image: url('./Images/space-banner2.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: hidden;
+}
+.home-banner-inner-container{
+    width:100%; 
+    display:flex;
+    justify-content:end;
+}
+
+.home-banner-text-container {
+    width:65%!important;
+    background-color: rgba(0, 0, 0, 0.85); 
+    padding:20px 20px;
+}
+
+
+
+.showcase-banner {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(225, 225, 210);
+}
+.showcase-container {
+    text-align: center;
+    padding: 10px 0;
+    display: flex !important;
+    align-items: start;
+    justify-content: space-around;
+}
+.showcase-card {
+    margin: 0;
+    padding:0;
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

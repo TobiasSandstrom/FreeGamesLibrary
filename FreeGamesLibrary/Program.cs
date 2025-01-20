@@ -1,5 +1,6 @@
 using Fluxor;
 using FreeGamesLibrary.Components;
+using FreeGamesLibrary.Data.Services;
 using MudBlazor.Services;
 using Settings;
 
@@ -15,7 +16,7 @@ var currentAssembly = typeof(Program).Assembly;
 builder.Services.AddFluxor(options => options.ScanAssemblies(currentAssembly));
 builder.Services.AddMudServices();
 builder.Services.AddSingleton<PageSettings>();
-
+builder.Services.AddSingleton<GameService>();
 var app = builder.Build();
 
 

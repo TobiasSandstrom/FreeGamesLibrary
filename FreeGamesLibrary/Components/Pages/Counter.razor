@@ -1,6 +1,7 @@
 ﻿@page "/counter"
 @using FreeGamesLibrary.Store.CounterState
-@using FreeGamesLibrary.Store
+@using FreeGamesLibrary.Store;
+@using FreeGamesLibrary.Store.UiUseState
 @rendermode InteractiveServer
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @inject IState<CounterState> counterState
@@ -9,7 +10,7 @@
 
 <h1>Counter</h1>
 
-<p role="status">Current count: @counterState.Value.Counter</p>
+<MudText role="status">Current count: @counterState.Value.Counter</MudText>
 
 <button class="btn btn-primary" @onclick="IncrementCount">Increment Counter</button>
 

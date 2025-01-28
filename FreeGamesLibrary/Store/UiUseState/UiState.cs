@@ -7,10 +7,14 @@ namespace FreeGamesLibrary.Store.UiUseState
     [FeatureState]
     public record UiState
     {
-        // Save all games in this list
-        public List<GameSimpleDisplayModel> GamesSimple { get; init; } = new();
-        public List<GameSimpleDisplayModel> FeaturedGamesSimple { get; init; } = new();
-        public List<GameSimpleDisplayModel> FilteredGamesSimple { get; init; } = new();
+        // Games Simple
+        public List<GameSimpleDisplayModel> GamesSimple { get; init; } = new(); // Store all simple games 
+        public List<GameSimpleDisplayModel> FeaturedGamesSimple { get; init; } = new(); // Featured games to display
+        public List<GameSimpleDisplayModel> FilteredGamesSimple { get; init; } = new(); // Filtered games to display in library
+        
+        // Games Detailed
+        public List<GameDetailedDisplayModel> DetailedGamesCache { get; init; } = new(); // Cache for detailed games
+        public GameDetailedDisplayModel DetailedGameToDisplay { get; init; } = new(); // Used in game detailed page
 
 
 

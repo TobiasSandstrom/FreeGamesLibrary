@@ -45,6 +45,27 @@ namespace FreeGamesLibrary.Data.Services
                 Console.WriteLine(e);
                 throw new Exception("Error Fetching GamesSimple from API");
             }
+        }        
+        
+        [HttpGet("game-detailed")]
+        public async Task<GameDetailedDisplayModel> GetGameDetailedAsync(int id)
+        {
+            try
+            {
+                var response = await _client.GetAsync($"game?id={id}");
+                if (!response.IsSuccessStatusCode)
+                    return new GameDetailedDisplayModel();
+                
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<GameDetailed>(responseBody);
+                
+                return ConvertGameDetailedToDisplayModel(result ?? new GameDetailed());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw new Exception("Error Fetching GamesDetailed from API");
+            }
         }
 
 
@@ -76,6 +97,27 @@ namespace FreeGamesLibrary.Data.Services
             }
             return res;
         }
+
+        private GameDetailedDisplayModel ConvertGameDetailedToDisplayModel(GameDetailed game)
+        {
+            return new GameDetailedDisplayModel(){
+                Developer = game.Developer,
+                FreeToGame_Profile_Url = game.FreeToGame_Profile_Url,
+                Game_Url = game.Game_Url,
+                Genre = game.Genre,
+                Id = game.Id,
+                Platform = GetPlatforms(game.Platform),
+                Publisher = game.Publisher,
+                Release_Date = game.Release_Date,
+                Short_Description = game.Short_Description,
+                Thumbnail = game.Thumbnail,
+                Title = game.Title,
+                Description = game.Description,
+                Screenshots = game.Screenshots,
+                Status = game.Status,
+            };
+        }
+
 
         private string[] GetPlatforms(string platforms)
         {

@@ -30,11 +30,13 @@
 
 
 <FeaturedGames />
+
 <MudContainer Class="d-flex justify-center items-center text-center">
     <MudButton Class="mr-2" Variant="Variant.Filled" Color="Color.Tertiary" OnClick="@GenerateClick">Generate new featured</MudButton>
-    <MudButton Class="ml-2" Variant="Variant.Filled" Color="Color.Tertiary" OnClick='() => NavigateTo("/counter")'>Library</MudButton>
-
+    <MudButton Class="ml-2" Variant="Variant.Filled" Color="Color.Tertiary" OnClick='() => NavigateTo("/library")'>Library</MudButton>
 </MudContainer>
+
+
 <div class="py-4 my-20 showcase-banner">
     <MudContainer Class="showcase-container">
         <MudContainer class="showcase-card">
@@ -78,15 +80,18 @@
         {
             dispatcher.Dispatch(new GetGamesSimpleListAction());
         }
-        // if (UiState.Value.FeaturedGamesSimple.Count > 0)
-        // {
-        //     dispatcher.Dispatch(new SetFeaturedGamesAction());
-        // }
+        else if (UiState.Value.FeaturedGamesSimple.Count <= 0)
+        {
+            dispatcher.Dispatch(new SetFeaturedGamesAction(UiState.Value.GamesSimple.ToList()));
+
+       }
     }
+
     private void NavigateTo(string url)
     {
         NavigationManager.NavigateTo(url);
     }    
+
     private void GenerateClick()
     {
         dispatcher.Dispatch(new SetFeaturedGamesAction(UiState.Value.GamesSimple));

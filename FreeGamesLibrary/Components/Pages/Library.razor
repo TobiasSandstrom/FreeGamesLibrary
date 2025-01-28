@@ -1,0 +1,88 @@
+﻿@page "/library"
+@using FreeGamesLibrary.Store.CounterState
+@using FreeGamesLibrary.Store;
+@using FreeGamesLibrary.Store.UiUseState
+@rendermode InteractiveServer
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@inject IState<UiState> UiState
+@inject IDispatcher dispatcher
+@inject NavigationManager NavigationManager;
+<PageTitle>Library</PageTitle>
+
+
+@* TODO: Det behövs en bättre header header*@
+<MudContainer Class="d-flex justify-center">
+
+    <MudText Color="Color.Secondary" Typo="Typo.h2"><b>Library</b></MudText>
+
+</MudContainer>
+
+
+@* TODO:
+    Börja med gridvy men senare ska det skapas så man kan toggla till listvy.
+    Lägg till sorterings dropdown
+    Fixa så sökningen reagerar på knapptryck, reagerar just nu först när man togglar ut från text inputen
+*@
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge">
+
+    <MudTextField T="string" Text="@SearchWord" TextChanged="@((e)=> OnSearchChanged(e))" Class="mb-6" Label="Search.." Variant="Variant.Text"></MudTextField>
+
+    <MudGrid Spacing="4" Class="d-flex flex-row">
+        @foreach (var game in UiState.Value.FilteredGamesSimple.ToList())
+        {
+            <MudItem xs="12" md="6" lg="3" xl="2"> 
+                <MudPaper Elevation="5" @onclick="() => NavigateTo(game.Game_Url)" Class="pa-4 d-flex flex-column justify-space-between" style="height:100%; background-color: var(--mud-palette-tertiary); cursor:pointer;">
+                    <div>
+                        <MudImage Style="width:100%" Src="@game.Thumbnail"></MudImage>
+                        <div class="d-flex justify-space-between">
+                            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="mb-2">@game.Title</MudText>
+                        </div>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">@game.Short_Description</MudText>
+
+                    </div>
+
+                    <div class="mt-2 d-flex justify-space-between">
+                        <MudChip Style="font-size:12px;" T="string" Color="Color.Secondary">@game.Genre</MudChip>
+                        <div style="display:flex; align-items:center; margin:0;" >
+                            @foreach (var platform in game.Platform)
+                            {
+                                <MudIcon Color="Color.Primary" Class="ml-2" Icon="@(platform == "PC (Windows)" ? Icons.Custom.Brands.MicrosoftWindows : @Icons.Custom.Brands.Chrome)"></MudIcon>
+                            }
+                        </div>
+                    </div>
+                </MudPaper>
+
+            </MudItem>
+        }
+    </MudGrid>
+
+</MudContainer>
+
+
+@code {
+
+    // Lägg sökordet i UiState för att behålla sökningen mellan sidbyten
+    private string SearchWord { get; set; } = "";
+    protected async override Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        if(UiState.Value.GamesSimple.Count <= 0){
+
+            dispatcher.Dispatch(new GetGamesSimpleListAction());
+        }
+    }
+
+    private void NavigateTo(string url)
+    {
+        NavigationManager.NavigateTo(url);
+    }
+    
+    private void OnSearchChanged(string? value)
+    {        
+        SearchWord = value;
+        Console.WriteLine("1");
+        dispatcher.Dispatch(new SearchUpdateFilteredGamesAction(SearchWord));
+
+    }
+}

@@ -10,9 +10,12 @@ namespace FreeGamesLibrary.Store.UiUseState.Effects
         {
 
             var games = await GameService.GetGamesSimpleAsync();
-            if (games != null) dispatcher.Dispatch(new SetGamesSimpleByResultAction(games));
+            if (games != null)
+            {
+                dispatcher.Dispatch(new SetGamesSimpleByResultAction(games));
+                dispatcher.Dispatch(new SetFeaturedGamesAction(games));
+            }
 
-
-        }
+            }
     }
 }

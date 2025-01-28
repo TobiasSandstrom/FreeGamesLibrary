@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Components\Shared\" />
     <Folder Include="Store\CounterState\Effects\" />
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>

@@ -1,0 +1,54 @@
+﻿@using FreeGamesLibrary.Data.Models
+@using FreeGamesLibrary.Store.UiUseState
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@inject NavigationManager NavigationManager;
+@inject IState<UiState> UiState
+@inject IDispatcher dispatcher
+
+
+<MudContainer Class="my-12">
+
+    <MudText Align="Align.Center" Class="my-6" Typo="Typo.h3">Featured Games</MudText>
+    <MudContainer>
+        <MudGrid Spacing="4" Class="d-flex flex-row">
+
+            @foreach (var game in UiState.Value.FeaturedGamesSimple.ToList())
+            {
+                <MudItem xs="12" lg="4">
+                    <MudPaper Elevation="5" @onclick="() => NavigateTo(game.Game_Url)" Class="pa-4" style="height:100%; background-color: var(--mud-palette-tertiary); cursor:pointer;">
+                        <MudImage Style="width:100%" Src="@game.Thumbnail"></MudImage>
+                        <div class="d-flex justify-space-between">
+                            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="mb-2">@game.Title</MudText>
+                                <div>
+                                    @foreach (var platform in game.Platform)
+                                    {
+                                        <MudIcon Color="Color.Primary" Class="ml-2" Icon="@(platform == "PC (Windows)" ? Icons.Custom.Brands.MicrosoftWindows : @Icons.Custom.Brands.Chrome)"></MudIcon>
+                                    }
+                                </div>
+
+                        </div>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">@game.Short_Description</MudText>
+                    </MudPaper>
+
+                </MudItem>
+
+            }
+
+        </MudGrid>
+    </MudContainer>
+</MudContainer>
+
+@code {
+
+    protected async override Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+    }
+    private void NavigateTo(string url)
+    {
+        NavigationManager.NavigateTo(url);
+    }
+
+
+
+}

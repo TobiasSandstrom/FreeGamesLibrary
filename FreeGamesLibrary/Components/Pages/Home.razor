@@ -5,6 +5,7 @@
 @inject IState<UiState> UiState
 @inject NavigationManager NavigationManager
 @using FreeGamesLibrary.Components.Layout
+@using FreeGamesLibrary.Components
 @using FreeGamesLibrary.Store.UiUseState
 
 <PageTitle>Home</PageTitle>
@@ -27,39 +28,13 @@
 
 </div>
 
-<MudContainer Class="mb-12 mt-12">
 
-    <MudText Align="Align.Center" Class="mb-6 mt-6" Typo="Typo.h3">Featured Games</MudText>
-    <MudContainer>
-        <MudGrid Spacing="4" Class="d-flex flex-row">
+<FeaturedGames />
+<MudContainer Class="d-flex justify-center items-center text-center">
+    <MudButton Class="mr-2" Variant="Variant.Filled" Color="Color.Tertiary" OnClick="@GenerateClick">Generate new featured</MudButton>
+    <MudButton Class="ml-2" Variant="Variant.Filled" Color="Color.Tertiary" OnClick='() => NavigateTo("/counter")'>Library</MudButton>
 
-            @foreach (var game in UiState.Value.GamesSimple.Take(3))
-            {
-
-                <MudItem xs="12" lg="4">
-                    <MudPaper Elevation="5" @onclick="() => NavigateTo(game.Game_Url)" Class="pa-4" style="height:100%; background-color: var(--mud-palette-tertiary); cursor:pointer;">
-                        <MudImage Style="width:100%" Src="@game.Thumbnail"></MudImage>
-                        <div class="d-flex justify-space-between" >
-                            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="mb-2">@game.Title</MudText>
-                                @foreach (var platform in game.Platform)
-                                {
-                                    <div>
-                                        <MudIcon Color="Color.Primary" Class="ml-2" Icon="@(platform == "PC (Windows)" ? Icons.Custom.Brands.MicrosoftWindows : @Icons.Custom.Brands.Chrome)"></MudIcon>
-                                    </div>
-                                }
-                            
-                        </div>
-                        <MudText Typo="Typo.body2" Color="Color.Secondary">@game.Short_Description</MudText>
-                    </MudPaper>
-
-                </MudItem>
-
-            }
-
-        </MudGrid>
-    </MudContainer>
 </MudContainer>
-
 <div class="py-4 my-20 showcase-banner">
     <MudContainer Class="showcase-container">
         <MudContainer class="showcase-card">
@@ -103,10 +78,17 @@
         {
             dispatcher.Dispatch(new GetGamesSimpleListAction());
         }
+        // if (UiState.Value.FeaturedGamesSimple.Count > 0)
+        // {
+        //     dispatcher.Dispatch(new SetFeaturedGamesAction());
+        // }
     }
-
     private void NavigateTo(string url)
     {
         NavigationManager.NavigateTo(url);
+    }    
+    private void GenerateClick()
+    {
+        dispatcher.Dispatch(new SetFeaturedGamesAction(UiState.Value.GamesSimple));
     }
 }

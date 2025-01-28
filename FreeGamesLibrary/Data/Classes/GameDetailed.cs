@@ -16,6 +16,7 @@
         public string Release_Date { get; set; } = string.Empty;
         public string FreeToGame_Profile_Url { get; set; } = string.Empty;
         public GameImage[] Screenshots { get; set; } = [];
+        public GameRequirements Minumum_System_Requirements { get; set; } = new();
 
     }
 }

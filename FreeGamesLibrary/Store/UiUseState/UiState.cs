@@ -1,4 +1,5 @@
 ﻿using Fluxor;
+using FreeGamesLibrary.Data.Misc;
 using FreeGamesLibrary.Data.Models;
 
 namespace FreeGamesLibrary.Store.UiUseState
@@ -19,6 +20,7 @@ namespace FreeGamesLibrary.Store.UiUseState
         public string[] GameGenres { get; set; } = [];
         public string SelectedGenre { get; set; } = string.Empty;
         public string SearchWord { get; set; } = string.Empty;
+        public GamesSortFilter SortGamesBy { get; set; }
 
         private UiState() { } // Required for creating initial state
     }

@@ -1,4 +1,6 @@
 ﻿@page "/library"
+@using FreeGamesLibrary.Data.Misc
+@using FreeGamesLibrary.Data.Models
 @using FreeGamesLibrary.Store.CounterState
 @using FreeGamesLibrary.Store;
 @using FreeGamesLibrary.Store.UiUseState
@@ -11,24 +13,29 @@
 
 
 @* TODO: Det behövs en bättre header header*@
-<MudContainer Class="d-flex justify-center">
+<div Class="library-banner">
 
-    <MudText Color="Color.Secondary" Typo="Typo.h2"><b>Library</b></MudText>
+    <MudContainer Class="library-banner-inner-container d-flex justify-center">
+        <MudContainer Class="library-banner-text-container">
 
-</MudContainer>
+        @* <MudText Color="Color.Secondary" Typo="Typo.h2"><b>Library</b></MudText> *@
 
+        </MudContainer>
+
+    </MudContainer>
+</div>
 
 @* TODO:
     Börja med gridvy men senare ska det skapas så man kan toggla till listvy.
-    Lägg till sorterings dropdown
     Fixa så sökningen reagerar på knapptryck, reagerar just nu först när man togglar ut från text inputen
 *@
 
 <MudContainer MaxWidth="MaxWidth.ExtraLarge">
-    <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+    <MudContainer Class="" MaxWidth="MaxWidth.ExtraLarge">
 
-        <MudContainer Class="w-50 mb-10">
-            <MudTextField T="string" Text="@UiState.Value.SearchWord" TextChanged="@((e)=> OnSearchChanged(e))" Class="mb-6" Label="Search.." Variant="Variant.Text"></MudTextField>
+        <MudContainer Class="w-75 mb-10">
+
+            <MudTextField T="string" Text="@UiState.Value.SearchWord" TextChanged="@((e)=> OnSearchChanged(e))" Class="mb-6 LibrarySearchInput" Label="Search.." Variant="Variant.Text"></MudTextField>
             <MudChip Class="mx-2"
             Style="font-size:12px;"
             T="string"
@@ -46,10 +53,28 @@
                     @genre
                 </MudChip>
             }
-        </MudContainer>
+
+
+
+
     </MudContainer>
+
+    <MudContainer Class="GameFilterContainer">
+
+            <MudSelect T="GamesSortFilter" Value="UiState.Value.SortGamesBy" ValueChanged="OnFilterGamesChanged" Placeholder="Sort by..">
+
+                <MudSelectItem Value="GamesSortFilter.TitleAscending">Title (Ascending)</MudSelectItem>
+                <MudSelectItem Value="GamesSortFilter.TitleDescending">Title (Descending)</MudSelectItem>
+                <MudSelectItem Value="GamesSortFilter.PublisherAscending">Publisher (Ascending)</MudSelectItem>
+                <MudSelectItem Value="GamesSortFilter.PublisherDescending">Publisher (Descending)</MudSelectItem>
+                <MudSelectItem Value="GamesSortFilter.DeveloperAscending">Developer (Ascending)</MudSelectItem>
+                <MudSelectItem Value="GamesSortFilter.DeveloperDescending">Developer (Descending)</MudSelectItem>
+            </MudSelect>
+
+    </MudContainer>
+</MudContainer>
     <MudGrid Spacing="4" Class="d-flex flex-row">
-        @foreach (var game in UiState.Value.FilteredGamesSimple.ToList())
+        @foreach (var game in GetGames())
         {
             <MudItem xs="12" md="6" lg="3" xl="2">
                 <MudPaper Elevation="5" @onclick="() => NavigateToGameDetaied(game.Id)" Class="pa-4 d-flex flex-column justify-space-between" style="height:100%; background-color: var(--mud-palette-tertiary); cursor:pointer;">
@@ -105,7 +130,38 @@
 
     private void OnGenreSelected(string genre)
     {
-        // Update the SelectedGenre in your UiState
         dispatcher.Dispatch(new OnSelectedGenreChangedAction(genre));
+    }
+
+    private void OnFilterGamesChanged(GamesSortFilter filter)
+    {
+        dispatcher.Dispatch(new SetGameFilterAction(filter));
+    }
+
+    private List<GameSimpleDisplayModel> GetGames()
+    {
+        switch (UiState.Value.SortGamesBy)
+        {
+            case Data.Misc.GamesSortFilter.TitleAscending:
+                return UiState.Value.FilteredGamesSimple.OrderBy(x => x.Title).ToList();
+
+            case Data.Misc.GamesSortFilter.TitleDescending:
+                return UiState.Value.FilteredGamesSimple.OrderByDescending(x => x.Title).ToList();
+
+            case Data.Misc.GamesSortFilter.PublisherAscending:
+                return UiState.Value.FilteredGamesSimple.OrderBy(x => x.Publisher).ToList();
+
+            case Data.Misc.GamesSortFilter.PublisherDescending:
+                return UiState.Value.FilteredGamesSimple.OrderByDescending(x => x.Publisher).ToList();
+
+            case Data.Misc.GamesSortFilter.DeveloperAscending:
+                return UiState.Value.FilteredGamesSimple.OrderBy(x => x.Developer).ToList();
+
+            case Data.Misc.GamesSortFilter.DeveloperDescending:
+                return UiState.Value.FilteredGamesSimple.OrderByDescending(x => x.Developer).ToList();
+
+            default: return new List<GameSimpleDisplayModel>();
+
+        }
     }
 }

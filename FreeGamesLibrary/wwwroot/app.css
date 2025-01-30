@@ -93,7 +93,8 @@
     border: 1px solid black;
     padding: 150px 20px;
     margin: 0px;
-    background-image: url('./Images/space-banner3.jpg');
+    margin-bottom:100px;
+    background-image: url('./Images/space-banner6.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -107,11 +108,25 @@
 
 .library-banner-text-container {
     width: 65% !important;
-    background-color: rgba(0, 0, 0, 0.85);
+    /*background-color: rgba(0, 0, 0, 0.6);*/
     padding: 20px 20px;
+    text-align:center;
 }
+.LibrarySearchInput {
+    color: white !important;
+}
+    .LibrarySearchInput .mud-input-label {
+        color: var(--mud-palette-primary) !important; /* Label color */
+    }
 
-
+.GameFilterContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    max-width: 50% !important;
+}
 
 
 /* Library section end */

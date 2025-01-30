@@ -1,0 +1,119 @@
+﻿@page "/game-details/{ID:int}"
+@using FreeGamesLibrary.Data.Models
+@using FreeGamesLibrary.Store.CounterState
+@using FreeGamesLibrary.Store;
+@using FreeGamesLibrary.Store.UiUseState
+@rendermode InteractiveServer
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@inject IState<UiState> UiState
+@inject IDispatcher dispatcher
+@inject NavigationManager NavigationManager;
+<PageTitle>@UiState.Value.DetailedGameToDisplay.Title</PageTitle>
+
+
+@* TODO: Det behövs en bättre header header*@
+<MudContainer Class="d-flex justify-center">
+
+    <MudText Color="Color.Secondary" Typo="Typo.h2"><b>Game Details</b></MudText>
+
+</MudContainer>
+
+
+
+<MudContainer Class="my-10" MaxWidth="MaxWidth.ExtraLarge">
+
+    <div class="d-flex">
+
+        <div class="w-50 mr-6">
+            <MudImage Width="500" Src=@UiState.Value.DetailedGameToDisplay.Thumbnail></MudImage>
+            <div>
+
+                <MudGrid Spacing="4" Class="d-flex flex-row mt-4">
+                    @foreach (var url in UiState.Value.DetailedGameToDisplay.Screenshots)
+                    {
+                        <MudItem xs="12" md="6" lg="3" xl="3">
+                            <MudPaper Elevation="0" Class="d-flex flex-column justify-space-between" style="height:100%; background-color: var(--mud-palette-tertiary); cursor:pointer;">
+                                <div>
+                                    <MudImage class="w-100" Style="" Src="@url.Image"></MudImage>
+                                </div>
+                            </MudPaper>
+
+                        </MudItem>
+                    }
+                </MudGrid>
+
+            </div>
+            <MudText>Publisher: @UiState.Value.DetailedGameToDisplay.Publisher</MudText>
+            <MudText>Developer: @UiState.Value.DetailedGameToDisplay.Developer</MudText>
+            <MudText>Released: @UiState.Value.DetailedGameToDisplay.Release_Date</MudText>
+
+
+
+            <MudText>Minimum required:</MudText>
+            <MudText>Operating system: @UiState.Value.DetailedGameToDisplay.Minimum_System_Requirements.OS</MudText>
+            <MudText>Memory: @UiState.Value.DetailedGameToDisplay.Minimum_System_Requirements.Memory</MudText>
+            <MudText>Processor: @UiState.Value.DetailedGameToDisplay.Minimum_System_Requirements.Processor</MudText>
+            <MudText>Graphics: @UiState.Value.DetailedGameToDisplay.Minimum_System_Requirements.Graphics</MudText>
+            <MudText>Storage: @UiState.Value.DetailedGameToDisplay.Minimum_System_Requirements.Storage</MudText>
+
+
+        </div>
+   
+        <div class="w-50 ml-6">
+
+            <MudText Typo="Typo.h3">@UiState.Value.DetailedGameToDisplay.Title</MudText>
+            <MudText Class="my-4">@UiState.Value.DetailedGameToDisplay.Description</MudText>
+
+            <MudButton Variant="Variant.Outlined" @onclick="() => NavigateTo(UiState.Value.DetailedGameToDisplay.Game_Url)">
+                Official Page 
+                <MudIcon Class="ml-2" Icon="@Icons.Material.Filled.ExitToApp"></MudIcon>
+            </MudButton>
+
+@*             <div class="mt-2 d-flex justify-space-between">
+                <MudChip Style="font-size:12px;" T="string" Color="Color.Secondary">@UiState.Value.DetailedGameToDisplay.Genre</MudChip>
+                <div style="display:flex; align-items:center; margin:0;">
+                    @foreach (var platform in @UiState.Value.DetailedGameToDisplay.Platform)
+                    {
+                        <MudIcon Color="Color.Primary" Class="ml-2" Icon="@(platform == "PC (Windows)" ? Icons.Custom.Brands.MicrosoftWindows : @Icons.Custom.Brands.Chrome)"></MudIcon>
+                    }
+                </div>
+            </div> *@
+
+
+        </div>
+
+
+
+
+    </div>
+
+
+</MudContainer>
+
+
+@code {
+
+    [Parameter]
+    public int ID { get; set; }
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        bool gameIsInCache = UiState.Value.DetailedGamesCache.Any(c => c.Id == ID);
+        if (gameIsInCache)
+        {
+            dispatcher.Dispatch(new SetDetailedGameToDisplayAction(UiState.Value.DetailedGamesCache.FirstOrDefault(c => c.Id == ID) ?? new GameDetailedDisplayModel()));
+        }
+        else{
+            dispatcher.Dispatch(new GetDetailedGameByIDAction(ID));
+        }
+    }
+
+    private void NavigateTo(string url)
+    {
+        NavigationManager.NavigateTo(url);
+    }
+
+}
+

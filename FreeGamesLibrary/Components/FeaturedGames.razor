@@ -15,7 +15,7 @@
             @foreach (var game in UiState.Value.FeaturedGamesSimple.ToList())
             {
                 <MudItem xs="12" lg="4">
-                    <MudPaper Elevation="5" @onclick="() => NavigateTo(game.Game_Url)" Class="pa-4" style="height:100%; background-color: var(--mud-palette-tertiary); cursor:pointer;">
+                    <MudPaper Elevation="5" @onclick="() => NavigateToGameDetaied(game.Id)" Class="pa-4" style="height:100%; background-color: var(--mud-palette-tertiary); cursor:pointer;">
                         <MudImage Style="width:100%" Src="@game.Thumbnail"></MudImage>
                         <div class="d-flex justify-space-between">
                             <MudText Typo="Typo.h6" Color="Color.Secondary" Class="mb-2">@game.Title</MudText>
@@ -44,9 +44,9 @@
     {
         await base.OnInitializedAsync();
     }
-    private void NavigateTo(string url)
+    private void NavigateToGameDetaied(int id)
     {
-        NavigationManager.NavigateTo(url);
+        NavigationManager.NavigateTo($"/game-details/{id}");
     }
 
 

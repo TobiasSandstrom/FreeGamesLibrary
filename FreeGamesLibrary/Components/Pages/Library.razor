@@ -31,8 +31,8 @@
     <MudGrid Spacing="4" Class="d-flex flex-row">
         @foreach (var game in UiState.Value.FilteredGamesSimple.ToList())
         {
-            <MudItem xs="12" md="6" lg="3" xl="2"> 
-                <MudPaper Elevation="5" @onclick="() => NavigateTo(game.Game_Url)" Class="pa-4 d-flex flex-column justify-space-between" style="height:100%; background-color: var(--mud-palette-tertiary); cursor:pointer;">
+            <MudItem xs="12" md="6" lg="3" xl="2">
+                <MudPaper Elevation="5" @onclick="() => NavigateToGameDetaied(game.Id)" Class="pa-4 d-flex flex-column justify-space-between" style="height:100%; background-color: var(--mud-palette-tertiary); cursor:pointer;">
                     <div>
                         <MudImage class="w-100" Style="" Src="@game.Thumbnail"></MudImage>
                         <MudText Typo="Typo.h6" Color="Color.Secondary" Class="mb-2">@game.Title</MudText>
@@ -72,9 +72,9 @@
         }
     }
 
-    private void NavigateTo(string url)
+    private void NavigateToGameDetaied(int id)
     {
-        NavigationManager.NavigateTo(url);
+        NavigationManager.NavigateTo($"/game-details/{id}");
     }
     
     private void OnSearchChanged(string? value)

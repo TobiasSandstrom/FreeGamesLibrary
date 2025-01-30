@@ -16,7 +16,9 @@ namespace FreeGamesLibrary.Store.UiUseState
         public List<GameDetailedDisplayModel> DetailedGamesCache { get; init; } = new(); // Cache for detailed games
         public GameDetailedDisplayModel DetailedGameToDisplay { get; init; } = new(); // Used in game detailed page
 
-
+        public string[] GameGenres { get; set; } = [];
+        public string SelectedGenre { get; set; } = string.Empty;
+        public string SearchWord { get; set; } = string.Empty;
 
         private UiState() { } // Required for creating initial state
     }

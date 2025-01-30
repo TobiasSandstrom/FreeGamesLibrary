@@ -25,9 +25,29 @@
 *@
 
 <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge">
 
-    <MudTextField T="string" Text="@SearchWord" TextChanged="@((e)=> OnSearchChanged(e))" Class="mb-6" Label="Search.." Variant="Variant.Text"></MudTextField>
-
+        <MudContainer Class="w-50 mb-10">
+            <MudTextField T="string" Text="@UiState.Value.SearchWord" TextChanged="@((e)=> OnSearchChanged(e))" Class="mb-6" Label="Search.." Variant="Variant.Text"></MudTextField>
+            <MudChip Class="mx-2"
+            Style="font-size:12px;"
+            T="string"
+                     Color="@((string.IsNullOrEmpty(UiState.Value.SelectedGenre)) ? Color.Tertiary : Color.Secondary)"
+                     OnClick="() => OnGenreSelected(string.Empty)">
+                All
+            </MudChip>
+            @foreach (var genre in UiState.Value.GameGenres.ToList())
+            {
+                <MudChip Class="mx-2"
+                Style="font-size:12px;"
+                T="string"
+                Color="@((UiState.Value.SelectedGenre.ToLower() == genre.ToLower()) ? Color.Tertiary : Color.Secondary)"
+                OnClick="() => OnGenreSelected(genre)">
+                    @genre
+                </MudChip>
+            }
+        </MudContainer>
+    </MudContainer>
     <MudGrid Spacing="4" Class="d-flex flex-row">
         @foreach (var game in UiState.Value.FilteredGamesSimple.ToList())
         {
@@ -56,13 +76,12 @@
         }
     </MudGrid>
 
+
 </MudContainer>
 
 
 @code {
 
-    // Lägg sökordet i UiState för att behålla sökningen mellan sidbyten
-    private string SearchWord { get; set; } = "";
     protected async override Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
@@ -79,9 +98,14 @@
     
     private void OnSearchChanged(string? value)
     {        
-        SearchWord = value;
         Console.WriteLine("1");
-        dispatcher.Dispatch(new SearchUpdateFilteredGamesAction(SearchWord));
+        dispatcher.Dispatch(new OnSearchWordChangedAction(value));
 
+    }
+
+    private void OnGenreSelected(string genre)
+    {
+        // Update the SelectedGenre in your UiState
+        dispatcher.Dispatch(new OnSelectedGenreChangedAction(genre));
     }
 }

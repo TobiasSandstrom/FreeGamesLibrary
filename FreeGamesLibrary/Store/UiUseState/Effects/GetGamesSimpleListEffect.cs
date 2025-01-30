@@ -14,6 +14,7 @@ namespace FreeGamesLibrary.Store.UiUseState.Effects
             {
                 dispatcher.Dispatch(new SetGamesSimpleByResultAction(games));
                 dispatcher.Dispatch(new SetFeaturedGamesAction(games));
+                dispatcher.Dispatch(new SetGameGenresAction(games));
             }
 
             }

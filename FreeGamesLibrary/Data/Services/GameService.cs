@@ -115,7 +115,7 @@ namespace FreeGamesLibrary.Data.Services
                 Description = game.Description,
                 Screenshots = game.Screenshots,
                 Status = game.Status,
-                Minumum_System_Requirements = game.Minumum_System_Requirements,
+                Minimum_System_Requirements = game.Minimum_System_Requirements,
             };
         }
 

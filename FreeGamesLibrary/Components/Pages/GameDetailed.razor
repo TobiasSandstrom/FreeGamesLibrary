@@ -11,22 +11,37 @@
 <PageTitle>@UiState.Value.DetailedGameToDisplay.Title</PageTitle>
 
 
-@* TODO: Det behövs en bättre header header*@
-<MudContainer Class="d-flex justify-center">
 
-    <MudText Color="Color.Secondary" Typo="Typo.h2"><b>Game Details</b></MudText>
+<MudContainer Class="GameDetailedContainer" MaxWidth="MaxWidth.ExtraLarge">
 
-</MudContainer>
+    <MudGrid Spacing="6" Class="d-flex flex-row justify-space-between">
+
+   
+            <MudItem xs="10" md="10" xl="6">
+            <MudText Typo="Typo.h2">@UiState.Value.DetailedGameToDisplay.Title</MudText>
+            <div class="mb-2 ">
+
+                <div style="display:flex; align-items:center; margin:0; margin-bottom:10px;">
+                    @foreach (var platform in UiState.Value.DetailedGameToDisplay.Platform)
+                    {
+                        <MudIcon Color="Color.Primary" Class="ml-2" Icon="@(platform == "PC (Windows)" ? Icons.Custom.Brands.MicrosoftWindows : @Icons.Custom.Brands.Chrome)"></MudIcon>
+                    }
+                </div>
+                <MudChip Style="font-size:12px;" T="string" Color="Color.Secondary">@UiState.Value.DetailedGameToDisplay.Genre</MudChip>
+            </div>
+            <MudText Class="my-4">@UiState.Value.DetailedGameToDisplay.Description</MudText>
+
+            <MudButton Variant="Variant.Outlined" @onclick="() => NavigateTo(UiState.Value.DetailedGameToDisplay.Game_Url)">
+                Official Page 
+                <MudIcon Class="ml-2" Icon="@Icons.Material.Filled.ExitToApp"></MudIcon>
+            </MudButton>
 
 
+        </MudItem>
 
-<MudContainer Class="my-10" MaxWidth="MaxWidth.ExtraLarge">
-
-    <div class="d-flex">
-
-        <div class="w-50 mr-6">
-            <MudImage Width="500" Src=@UiState.Value.DetailedGameToDisplay.Thumbnail></MudImage>
-            <div>
+        <MudItem xs="10" md="10" xl="4">
+            <MudImage Class="w-100" Src=@UiState.Value.DetailedGameToDisplay.Thumbnail></MudImage>
+            <div >
 
                 <MudGrid Spacing="4" Class="d-flex flex-row mt-4">
                     @foreach (var url in UiState.Value.DetailedGameToDisplay.Screenshots)
@@ -43,53 +58,39 @@
                 </MudGrid>
 
             </div>
-            <MudText>Publisher: @UiState.Value.DetailedGameToDisplay.Publisher</MudText>
-            <MudText>Developer: @UiState.Value.DetailedGameToDisplay.Developer</MudText>
-            <MudText>Released: @UiState.Value.DetailedGameToDisplay.Release_Date</MudText>
+
+            <div class="gameSpecsContainer">
+
+                <MudText>Publisher: @UiState.Value.DetailedGameToDisplay.Publisher</MudText>
+                <MudText>Developer: @UiState.Value.DetailedGameToDisplay.Developer</MudText>
+                <MudText>Released: @UiState.Value.DetailedGameToDisplay.Release_Date</MudText>
 
 
 
-            <MudText>Minimum required:</MudText>
-            <MudText>Operating system: @UiState.Value.DetailedGameToDisplay.Minimum_System_Requirements.OS</MudText>
-            <MudText>Memory: @UiState.Value.DetailedGameToDisplay.Minimum_System_Requirements.Memory</MudText>
-            <MudText>Processor: @UiState.Value.DetailedGameToDisplay.Minimum_System_Requirements.Processor</MudText>
-            <MudText>Graphics: @UiState.Value.DetailedGameToDisplay.Minimum_System_Requirements.Graphics</MudText>
-            <MudText>Storage: @UiState.Value.DetailedGameToDisplay.Minimum_System_Requirements.Storage</MudText>
-
-
-        </div>
-   
-        <div class="w-50 ml-6">
-
-            <MudText Typo="Typo.h3">@UiState.Value.DetailedGameToDisplay.Title</MudText>
-            <MudText Class="my-4">@UiState.Value.DetailedGameToDisplay.Description</MudText>
-
-            <MudButton Variant="Variant.Outlined" @onclick="() => NavigateTo(UiState.Value.DetailedGameToDisplay.Game_Url)">
-                Official Page 
-                <MudIcon Class="ml-2" Icon="@Icons.Material.Filled.ExitToApp"></MudIcon>
-            </MudButton>
-
-@*             <div class="mt-2 d-flex justify-space-between">
-                <MudChip Style="font-size:12px;" T="string" Color="Color.Secondary">@UiState.Value.DetailedGameToDisplay.Genre</MudChip>
-                <div style="display:flex; align-items:center; margin:0;">
-                    @foreach (var platform in @UiState.Value.DetailedGameToDisplay.Platform)
-                    {
-                        <MudIcon Color="Color.Primary" Class="ml-2" Icon="@(platform == "PC (Windows)" ? Icons.Custom.Brands.MicrosoftWindows : @Icons.Custom.Brands.Chrome)"></MudIcon>
-                    }
+                <MudText>Minimum required:</MudText>
+                <MudText>Operating system: @UiState.Value.DetailedGameToDisplay.Minimum_System_Requirements.OS</MudText>
+                <MudText>Memory: @UiState.Value.DetailedGameToDisplay.Minimum_System_Requirements.Memory</MudText>
+                <MudText>Processor: @UiState.Value.DetailedGameToDisplay.Minimum_System_Requirements.Processor</MudText>
+                <MudText>Graphics: @UiState.Value.DetailedGameToDisplay.Minimum_System_Requirements.Graphics</MudText>
+                <MudText>Storage: @UiState.Value.DetailedGameToDisplay.Minimum_System_Requirements.Storage</MudText>
+                <div class="d-flex align-center">
+                    <MudText>Status:</MudText>
+                    <div class="StatusCircle @(UiState.Value.DetailedGameToDisplay.Status.ToLower() == "live" ? "bg-green" : "bg-red")"></div>
                 </div>
-            </div> *@
-
-
-        </div>
 
 
 
+            </div>
 
-    </div>
+        </MudItem>
+
+
+    </MudGrid>
 
 
 </MudContainer>
 
+<ShowCase />
 
 @code {
 

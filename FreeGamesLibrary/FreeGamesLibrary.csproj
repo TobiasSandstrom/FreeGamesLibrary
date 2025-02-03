@@ -23,4 +23,10 @@
     <Folder Include="Store\CounterState\Effects\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Components\ShowCase.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+
 </Project>

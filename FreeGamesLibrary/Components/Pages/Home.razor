@@ -36,35 +36,7 @@
     <MudButton Class="ml-2" Variant="Variant.Filled" Color="Color.Tertiary" OnClick='() => NavigateTo("/library")'>Library</MudButton>
 </MudContainer>
 
-
-<div class="py-4 my-20 showcase-banner">
-    <MudContainer Class="showcase-container">
-        <MudContainer class="showcase-card">
-            <MudIcon Style="margin:0; font-size:50px;" Color="Color.Tertiary" Icon="@Icons.Material.Filled.MoneyOff"></MudIcon>
-            <MudText Typo="Typo.h6" Color="Color.Tertiary">100% free to play</MudText>
-            <MudText Typo="Typo.body2" Color="Color.Tertiary">The library consists exclusively of 100% free games to play.</MudText>
-        </MudContainer>    
-        <MudContainer class="showcase-card">
-            <MudIcon Style="margin:0; font-size:50px;" Color="Color.Tertiary" Icon="@Icons.Custom.Uncategorized.ChessQueen"></MudIcon>
-            <MudText Typo="Typo.h6" Color="Color.Tertiary">Easy to use</MudText>
-            <MudText Typo="Typo.body2" Color="Color.Tertiary">Simple and user-friendly—browse through categories or try your luck with a randomly selected free game!</MudText>
-
-        </MudContainer>
-        <MudContainer class="showcase-card">
-            <MudIcon Style="margin:0; font-size:50px;" Color="Color.Tertiary" Icon="@Icons.Material.Filled.VideogameAsset"></MudIcon>
-            <MudText Typo="Typo.h6" Color="Color.Tertiary">@UiState.Value.GamesSimple.Count</MudText>
-            <MudText Typo="Typo.body2" Color="Color.Tertiary">Current games in the library!</MudText>
-            <MudText Typo="Typo.body2" Color="Color.Tertiary">
-                <b>@UiState.Value.GamesSimple.Count(x => x.Platform.Any(p => p.Equals("PC (Windows)", StringComparison.OrdinalIgnoreCase)))</b> - PC Games
-            </MudText>
-            <MudText Typo="Typo.body2" Color="Color.Tertiary">
-                <b>@UiState.Value.GamesSimple.Count(x => x.Platform.Any(p => p.Equals("Web Browser", StringComparison.OrdinalIgnoreCase)))</b> - Web Browser Games
-            </MudText>
-
-        </MudContainer>       
-    </MudContainer>
-</div>
-
+<ShowCase />
 
 
 <div style="height:25vh;">

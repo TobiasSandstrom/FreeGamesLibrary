@@ -16,11 +16,7 @@
 <div Class="library-banner">
 
     <MudContainer Class="library-banner-inner-container d-flex justify-center">
-        <MudContainer Class="library-banner-text-container">
-
-        @* <MudText Color="Color.Secondary" Typo="Typo.h2"><b>Library</b></MudText> *@
-
-        </MudContainer>
+        <MudContainer Class="library-banner-text-container"></MudContainer>
 
     </MudContainer>
 </div>
@@ -33,6 +29,8 @@
 <MudContainer MaxWidth="MaxWidth.ExtraLarge">
     <MudContainer Class="" MaxWidth="MaxWidth.ExtraLarge">
 
+        <MudText Class="mb-20" Align="Align.Center" Color="Color.Primary" Typo="Typo.h2"><b>Free Game Library</b></MudText>
+        
         <MudContainer Class="w-75 mb-10">
 
             <MudTextField T="string" Text="@UiState.Value.SearchWord" TextChanged="@((e)=> OnSearchChanged(e))" Class="mb-6 LibrarySearchInput" Label="Search.." Variant="Variant.Text"></MudTextField>
@@ -63,12 +61,12 @@
 
             <MudSelect T="GamesSortFilter" Value="UiState.Value.SortGamesBy" ValueChanged="OnFilterGamesChanged" Placeholder="Sort by..">
 
-                <MudSelectItem Value="GamesSortFilter.TitleAscending">Title (Ascending)</MudSelectItem>
-                <MudSelectItem Value="GamesSortFilter.TitleDescending">Title (Descending)</MudSelectItem>
-                <MudSelectItem Value="GamesSortFilter.PublisherAscending">Publisher (Ascending)</MudSelectItem>
-                <MudSelectItem Value="GamesSortFilter.PublisherDescending">Publisher (Descending)</MudSelectItem>
-                <MudSelectItem Value="GamesSortFilter.DeveloperAscending">Developer (Ascending)</MudSelectItem>
-                <MudSelectItem Value="GamesSortFilter.DeveloperDescending">Developer (Descending)</MudSelectItem>
+                <MudSelectItem Class="GameFilterItem" Value="GamesSortFilter.TitleAscending">Title (Ascending)</MudSelectItem>
+                <MudSelectItem Class="GameFilterItem" Value="GamesSortFilter.TitleDescending">Title (Descending)</MudSelectItem>
+                <MudSelectItem Class="GameFilterItem" Value="GamesSortFilter.PublisherAscending">Publisher (Ascending)</MudSelectItem>
+                <MudSelectItem Class="GameFilterItem" Value="GamesSortFilter.PublisherDescending">Publisher (Descending)</MudSelectItem>
+                <MudSelectItem Class="GameFilterItem" Value="GamesSortFilter.DeveloperAscending">Developer (Ascending)</MudSelectItem>
+                <MudSelectItem Class="GameFilterItem" Value="GamesSortFilter.DeveloperDescending">Developer (Descending)</MudSelectItem>
             </MudSelect>
 
     </MudContainer>

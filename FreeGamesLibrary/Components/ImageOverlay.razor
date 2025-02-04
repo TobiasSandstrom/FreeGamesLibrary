@@ -1,0 +1,55 @@
+﻿@using FreeGamesLibrary.Data.Classes
+@using FreeGamesLibrary.Store.UiUseState
+@inject IState<UiState> UiState
+@inject IDispatcher dispatcher
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+
+
+<MudDialog Class="rounded-lg ImageOverlayDialog">
+    <DialogContent>
+        <MudContainer Class="ImageOverlayContainer">
+            <MudGrid Class="m-0 p-0 ImageOverlayGrid">
+                <MudItem sm="8" md="12" Class="m-0 p-0" >
+                    <!-- Image -->
+                    <MudImage Src="@UiState.Value.DetailedGameDisplayImage.Image" Class="ImageOverlayImage" />
+
+                    <!-- Navigation Buttons -->
+                    <div class="ImageOverlayButtonContainer">
+                        
+                        <div @onclick="ShowPrevImage" class="ImageOverlayButton" >
+                            <MudIconButton Icon="@Icons.Material.Filled.ArrowBackIosNew" OnClick="ShowNextImage" Class="ImageOverlayButtonIcon" />
+                        </div>
+                        <div @onclick="ShowNextImage" class="ImageOverlayButton mr-2">
+                            <MudIconButton Icon="@Icons.Material.Filled.ArrowForwardIos" OnClick="ShowNextImage" Class="ImageOverlayButtonIcon" />
+                        </div>
+
+                    </div>
+                </MudItem>
+            </MudGrid>
+        </MudContainer>
+    </DialogContent>
+</MudDialog>
+
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+    private void ShowPrevImage()
+    {
+        dispatcher.Dispatch(new DecrementDetailedGameImageIndexAction(UiState.Value.DetailedGameToDisplay.Screenshots.ToList(), UiState.Value.DetailedGameImageIndex));
+    }
+
+    private void ShowNextImage()
+    {
+        dispatcher.Dispatch(new IncrementDetailedGameImageIndexAction(UiState.Value.DetailedGameToDisplay.Screenshots.ToList(), UiState.Value.DetailedGameImageIndex));
+    }
+
+    void Close() => MudDialog.Close(DialogResult.Ok(true));
+
+}

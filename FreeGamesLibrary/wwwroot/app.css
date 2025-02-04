@@ -151,7 +151,7 @@
 
 
 
-/* Detailed start */
+/* Game Detailed start */
 .GameDetailedContainer{
     padding-top: 5%;
 
@@ -163,4 +163,58 @@
 }
 
 /* Game Detailed end */
+
+
+/*ImageOverlay start */
+
+.ImageOverlayDialog {
+    background-color: var(--mud-palette-primary) !important;
+    padding: 0 !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+.ImageOverlayContainer {
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+    position: relative !important;
+}
+
+.ImageOverlayGrid {
+    width: auto !important;
+    text-align: center !important;
+}
+
+
+.ImageOverlayImage {
+    width: auto !important;
+    height: auto !important;
+    max-width: 100% !important;
+    display: block !important;
+}
+
+.ImageOverlayButtonContainer {
+    min-height: 100% !important;
+    min-width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    position: absolute !important;
+    top: 0 !important
+}
+
+.ImageOverlayButton {
+    min-height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    cursor: pointer !important;
+}
+.ImageOverlayButtonIcon {
+    background-color: rgba(0,0,0,0.5) !important;
+    color: white !important;
+    margin-left: 10px !important;
+}
+/* ImageOverlay end */
 

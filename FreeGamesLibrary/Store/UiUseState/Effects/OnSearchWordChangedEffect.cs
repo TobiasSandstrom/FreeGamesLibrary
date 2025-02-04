@@ -8,11 +8,8 @@ namespace FreeGamesLibrary.Store.UiUseState.Effects
         public async Task OnSearchWordChangedEffect(OnSearchWordChangedAction action, IDispatcher dispatcher)
         { 
 
-{
             dispatcher.Dispatch(new SetSearchWordAction(action.SearchWord));
             dispatcher.Dispatch(new SearchUpdateFilteredGamesAction(action.SearchWord));
-
-            }
 
         }
     }

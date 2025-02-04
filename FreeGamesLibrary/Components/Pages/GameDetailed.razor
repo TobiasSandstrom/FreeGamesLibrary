@@ -1,4 +1,5 @@
 ﻿@page "/game-details/{ID:int}"
+@using FreeGamesLibrary.Data.Classes
 @using FreeGamesLibrary.Data.Models
 @using FreeGamesLibrary.Store.CounterState
 @using FreeGamesLibrary.Store;
@@ -8,6 +9,7 @@
 @inject IState<UiState> UiState
 @inject IDispatcher dispatcher
 @inject NavigationManager NavigationManager;
+@inject IDialogService DialogService
 <PageTitle>@UiState.Value.DetailedGameToDisplay.Title</PageTitle>
 
 
@@ -16,8 +18,8 @@
 
     <MudGrid Spacing="6" Class="d-flex flex-row justify-space-between">
 
-   
-            <MudItem xs="10" md="10" xl="6">
+
+        <MudItem xs="10" md="10" xl="6">
             <MudText Typo="Typo.h2">@UiState.Value.DetailedGameToDisplay.Title</MudText>
             <div class="mb-2 ">
 
@@ -48,7 +50,7 @@
                     {
                         <MudItem xs="12" md="6" lg="3" xl="3">
                             <MudPaper Elevation="0" Class="d-flex flex-column justify-space-between" style="height:100%; background-color: var(--mud-palette-tertiary); cursor:pointer;">
-                                <div>
+                                <div style="cursor: pointer;" @onclick="() => OpenDetailsCard(url)">
                                     <MudImage class="w-100" Style="" Src="@url.Image"></MudImage>
                                 </div>
                             </MudPaper>
@@ -115,6 +117,19 @@
     {
         NavigationManager.NavigateTo(url);
     }
-
+    private void OpenDetailsCard(GameImage clickedImage)
+    {
+        var index = UiState.Value.DetailedGameToDisplay.Screenshots.ToList().IndexOf(clickedImage);
+        dispatcher.Dispatch(new SetDetailedGameImageIndexAction(index));
+        dispatcher.Dispatch(new SetDetailedGameDisplayImageAction(clickedImage));
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, NoHeader = true, MaxWidth = MaxWidth.ExtraLarge, CloseButton = true};
+        // var parameters = new DialogParameters
+        // {
+        //     { "Images", UiState.Value.DetailedGameToDisplay.Screenshots.ToList() }, // Replace with the actual image list
+        //     { "CurrentImage", clickedImage }
+        // };
+        
+        DialogService.Show<ImageOverlay>("", /* parameters , */options);
+    }
 }
 

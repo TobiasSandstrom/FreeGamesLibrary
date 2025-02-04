@@ -24,7 +24,7 @@
                 <div style="display:flex; align-items:center; margin:0; margin-bottom:10px;">
                     @foreach (var platform in UiState.Value.DetailedGameToDisplay.Platform)
                     {
-                        <MudIcon Color="Color.Primary" Class="ml-2" Icon="@(platform == "PC (Windows)" ? Icons.Custom.Brands.MicrosoftWindows : @Icons.Custom.Brands.Chrome)"></MudIcon>
+                        <MudIcon Color="Color.Primary" Class="ml-2" Icon="@(platform.ToLower() == "windows" ? Icons.Custom.Brands.MicrosoftWindows : @Icons.Custom.Brands.Chrome)"></MudIcon>
                     }
                 </div>
                 <MudChip Style="font-size:12px;" T="string" Color="Color.Secondary">@UiState.Value.DetailedGameToDisplay.Genre</MudChip>

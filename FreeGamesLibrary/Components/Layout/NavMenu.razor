@@ -1,12 +1,17 @@
-﻿@using Settings
+﻿@using FreeGamesLibrary.Store.UiUseState
+@using Settings
+@inject IDispatcher dispatcher
+@inject IState<UiState> UiState
+@inject NavigationManager NavigationManager
+
 
 <MudNavMenu Bordered="true" Class="navbar">
     <div class="navbar-container mb-4">
-            <div class="navbar-top">
-                <MudImage onclick="window.location.href='/'" Class="navbar-top-image" Style="width:60%; align-self:center;" Src="Images/rb_3714.png" />
+        <div class="navbar-top">
+            <MudImage onclick="window.location.href='/'" Class="navbar-top-image" Style="width:60%; align-self:center;" Src="Images/rb_3714.png" />
             <MudText style="font-size:10px" Class="align-self-center mb-2" Color="Color.Primary" Typo="Typo.subtitle2"><a href="https://www.freepik.com/free-vector/cute-astronaut-riding-rocket-space-with-waving-hand-cartoon-vector-icon-illustration-science-tech_34293318.htm#fromView=author&page=3&position=9&uuid=5e2eacde-0584-4bb3-85d5-e0980dca3ca1">Image by catalyststuff on</a> <MudLink Color="Color.Secondary" style="text-decoration:underline;font-size:10px;" href="https://www.freepik.com">Freepik</MudLink></MudText>
             <MudText Class="align-self-center mb-2" Color="Color.Primary"  Typo="Typo.h5">Free Games Library</MudText>
-            </div>
+        </div>
     </div>
 
     <MudNavLink Class="navlink" Href="/" Match="NavLinkMatch.All">
@@ -15,6 +20,9 @@
     <MudNavLink Class="navlink" Href="/library" Match="NavLinkMatch.Prefix">
         <MudText Color="Color.Primary">Library</MudText>
     </MudNavLink>
+@*     <MudNavLink Class="navlink" OnClick="OnRandomizeGame">
+        <MudText Color="Color.Primary">Randomize a Game</MudText>
+    </MudNavLink> *@
 
 </MudNavMenu>
 
@@ -22,6 +30,15 @@
 
 @code{
 
-    PageSettings settings = new PageSettings();
+        PageSettings settings = new PageSettings();
+    protected async override Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
 
+    }
+    // private void OnRandomizeGame()
+    // {
+    //     dispatcher.Dispatch(new RandomizeGameAction(UiState.Value.GamesSimple, UiState.Value.DetailedGamesCache));
+    //     NavigationManager.NavigateTo($"/game-details/{UiState.Value.DetailedGameToDisplay.Id}");
+    // }
 }

@@ -20,25 +20,19 @@
 
     </MudContainer>
 </div>
-
-@* TODO:
-    Börja med gridvy men senare ska det skapas så man kan toggla till listvy.
-    Fixa så sökningen reagerar på knapptryck, reagerar just nu först när man togglar ut från text inputen
-*@
-
 <MudContainer MaxWidth="MaxWidth.ExtraLarge">
     <MudContainer Class="" MaxWidth="MaxWidth.ExtraLarge">
 
         <MudText Class="mb-20" Align="Align.Center" Color="Color.Primary" Typo="Typo.h2"><b>Free Game Library</b></MudText>
-        
+
         <MudContainer Class="w-75 mb-10">
 
             <MudTextField T="string" Text="@UiState.Value.SearchWord" TextChanged="@((e)=> OnSearchChanged(e))" Class="mb-6 LibrarySearchInput" Label="Search.." Variant="Variant.Text"></MudTextField>
             <MudChip Class="mx-2"
             Style="font-size:12px;"
             T="string"
-                     Color="@((string.IsNullOrEmpty(UiState.Value.SelectedGenre)) ? Color.Tertiary : Color.Secondary)"
-                     OnClick="() => OnGenreSelected(string.Empty)">
+            Color="@((string.IsNullOrEmpty(UiState.Value.SelectedGenre)) ? Color.Tertiary : Color.Secondary)"
+            OnClick="() => OnGenreSelected(string.Empty)">
                 All
             </MudChip>
             @foreach (var genre in UiState.Value.GameGenres.ToList())
@@ -52,12 +46,9 @@
                 </MudChip>
             }
 
+        </MudContainer>
 
-
-
-    </MudContainer>
-
-    <MudContainer Class="GameFilterContainer">
+        <MudContainer Class="GameFilterContainer">
 
             <MudSelect T="GamesSortFilter" Value="UiState.Value.SortGamesBy" ValueChanged="OnFilterGamesChanged" Placeholder="Sort by..">
 
@@ -69,36 +60,24 @@
                 <MudSelectItem Class="GameFilterItem" Value="GamesSortFilter.DeveloperDescending">Developer (Descending)</MudSelectItem>
             </MudSelect>
 
+            <div>
+                <MudIconButton OnClick="() => SetLibraryView(LibraryDisplayView.GridView)" Size="Size.Large" Color="@((UiState.Value.LibraryDisplayView == LibraryDisplayView.GridView) ? Color.Tertiary : Color.Primary)" Icon="@Icons.Material.Filled.GridView"></MudIconButton>
+                <MudIconButton OnClick="() => SetLibraryView(LibraryDisplayView.ListView)" Size="Size.Large" Color="@((UiState.Value.LibraryDisplayView == LibraryDisplayView.ListView) ? Color.Tertiary : Color.Primary)" Icon="@Icons.Material.Filled.ViewList"></MudIconButton>
+            </div>
+        </MudContainer>
     </MudContainer>
-</MudContainer>
     <MudGrid Spacing="4" Class="d-flex flex-row">
         @foreach (var game in GetGames())
         {
-            <MudItem xs="12" md="6" lg="3" xl="2">
-                <MudPaper Elevation="5" @onclick="() => NavigateToGameDetaied(game.Id)" Class="pa-4 d-flex flex-column justify-space-between" style="height:100%; background-color: var(--mud-palette-tertiary); cursor:pointer;">
-                    <div>
-                        <MudImage class="w-100" Style="" Src="@game.Thumbnail"></MudImage>
-                        <MudText Typo="Typo.h6" Color="Color.Secondary" Class="mb-2">@game.Title</MudText>
-
-                        <MudText Typo="Typo.body2" Color="Color.Secondary">@game.Short_Description</MudText>
-
-                    </div>
-
-                    <div class="mt-2 d-flex justify-space-between">
-                        <MudChip Style="font-size:12px;" T="string" Color="Color.Secondary">@game.Genre</MudChip>
-                        <div style="display:flex; align-items:center; margin:0;" >
-                            @foreach (var platform in game.Platform)
-                            {
-                                <MudIcon Color="Color.Primary" Class="ml-2" Icon="@(platform == "PC (Windows)" ? Icons.Custom.Brands.MicrosoftWindows : @Icons.Custom.Brands.Chrome)"></MudIcon>
-                            }
-                        </div>
-                    </div>
-                </MudPaper>
-
-            </MudItem>
+            if (UiState.Value.LibraryDisplayView == LibraryDisplayView.GridView)
+            {
+                <LibraryGridView game="@game" />
+            }
+            else{
+                <LibraryListView game="@game" />
+            }
         }
     </MudGrid>
-
 
 </MudContainer>
 
@@ -114,11 +93,11 @@
         }
     }
 
-    private void NavigateToGameDetaied(int id)
+    private void SetLibraryView(LibraryDisplayView view)
     {
-        NavigationManager.NavigateTo($"/game-details/{id}");
+        dispatcher.Dispatch(new SetLibraryDisplayViewAction(view));
     }
-    
+
     private void OnSearchChanged(string? value)
     {        
         Console.WriteLine("1");

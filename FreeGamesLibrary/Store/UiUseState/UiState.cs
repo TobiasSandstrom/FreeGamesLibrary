@@ -26,6 +26,8 @@ namespace FreeGamesLibrary.Store.UiUseState
         public int DetailedGameImageIndex { get; set; } = 0;
         public GameImage DetailedGameDisplayImage { get; set; } = new();
 
+        public LibraryDisplayView LibraryDisplayView { get; set; } = LibraryDisplayView.GridView;
+
         private UiState() { } // Required for creating initial state
     }
 }

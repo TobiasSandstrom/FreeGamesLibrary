@@ -133,6 +133,7 @@
 
 .GameFilterContainer {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-top: 50px;
@@ -146,6 +147,71 @@
     .GameFilterItem .mud-primary-hover {
         background-color: blue !important;
     }
+
+
+.ZoomImageContainer {
+    overflow: hidden; /* Ensure the zoomed image stays within the container */
+    display: inline-block; /* Makes the container fit around the image */
+}
+
+.ZoomImage {
+    transition: transform 0.3s ease; /* Smooth zoom effect */
+}
+
+    .ZoomImage:hover {
+        transform: scale(1.2); /* Scale the image on hover */
+    }
+
+
+
+/* ListView section end */
+.ListViewImageContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.ListViewImage {
+    cursor: pointer;
+    height: 150px;
+}
+
+@media screen and (max-width: 900px) {
+    .ListViewImage {
+        height: 80px;
+    }
+
+}
+
+.zoomed-container {
+    position: absolute;
+    top: 0;
+    left: 100%; /* Position it to the right of the original image */
+    transform: translateX(10px); /* Add spacing */
+    width: 600px; /* Adjust width for the zoomed image */
+    height: auto;
+    z-index: 10;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    visibility: hidden; /* Initially hidden */
+    opacity: 0; /* Invisible at start */
+    transition: opacity 0.3s ease;
+}
+
+.zoomed-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.ListViewImageContainer:hover .zoomed-container {
+    visibility: visible;
+    opacity: 1; /* Show the zoomed container on hover */
+}
+
+/* ListView section end */
+
+
 
 /* Library section end */
 
